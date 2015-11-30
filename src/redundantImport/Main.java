@@ -7,7 +7,9 @@ public class Main {
 		ExecuteCommand obj = new ExecuteCommand();
 		String command = "srcml " + filePath;
 		String output = obj.executeCommand(command);
-		System.out.println(output);
+//		System.out.println(output);
 		
+		ImportsList obj1 = new ImportsList();
+		obj1.ImportsList(output);
 	}
 }
