@@ -1,4 +1,7 @@
 package redundantImport;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import common.*;
 public class Main {
 	public static void main(String[] args) {
@@ -10,6 +13,13 @@ public class Main {
 //		System.out.println(output);
 		
 		ImportsList obj1 = new ImportsList();
-		obj1.ImportsList(output);
+		ArrayList<String> importsList = obj1.ImportsList(output);
+		
+		for (Iterator iterator = importsList.iterator(); iterator.hasNext();) {
+			String string = (String) iterator.next();
+			System.out.println(string);
+		}
+		
+		
 	}
 }
