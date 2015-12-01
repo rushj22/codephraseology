@@ -1,7 +1,10 @@
 package redundantImport;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.TreeMap;
 
 public class Tree {
 
@@ -17,19 +20,23 @@ public class Tree {
 		}
 		Node current = this.root;
 		Node crawlTr;
+		boolean flagForStar = false;
 		for(int i = 0 ; i < string.length ; i++) {
 			crawlTr = current.getNextNode(string[i]);
+			if(i < string.length - 1 && string[i+1].equals("*")) {
+//				System.out.println("Bleh");
+				crawlTr.setStar(true);
+				flagForStar = true;
+				break;
+			}
 			if(crawlTr == null) {
-				if(string[i].equals("*")) {
-					current.setStar(true);
-				} else {
-					crawlTr = new Node(string[i]);		//Create new node
-					current.setNextNode(string[i], crawlTr);
-				}
+				crawlTr = new Node(string[i]);		//Create new node
+				current.setNextNode(string[i], crawlTr);
+//				System.out.println(string[i]);
 			}
 			current = crawlTr;
 		}
-		current.setEnd(true);
+		if(!flagForStar) {current.setEnd(true);}
 	}
 	
 	public void display() {
@@ -39,10 +46,18 @@ public class Tree {
 		while(!tempQueue.isEmpty()) {
 			current = tempQueue.remove();
 			System.out.print(current.getNodeVal());
-			for(int i = 0; i < current.getChildren().size(); i++) {
-				tempQueue.add(current.getChildren().get(i));
+			if(current.isStar()) {
+				System.out.print("Star");
+			}
+			if(current.isEnd()) {
+				System.out.print("End");
+			}
+			TreeMap<String, Node> children = current.getChildren();
+			for (Iterator iterator = children.values().iterator(); iterator.hasNext();) {
+				Node node = (Node) iterator.next();
+				tempQueue.add(node);
 			}
 		}
-		
+		System.out.println();
 	}
 }

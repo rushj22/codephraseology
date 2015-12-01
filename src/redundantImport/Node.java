@@ -55,5 +55,4 @@ public class Node {
 	public void setChildren(TreeMap<String, Node> children) {
 		this.children = children;
 	}
-
 }
