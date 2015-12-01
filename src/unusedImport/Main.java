@@ -28,59 +28,75 @@ public class Main {
 //		System.out.println(output);
 		ImportsList obj1 = new ImportsList();
 		ArrayList<String> importsList = obj1.ImportsList(output);
-		ArrayList<ArrayList<String>> splitStore = new ArrayList<ArrayList<String>>();
+		ArrayList<ArrayList<String>> splitStarStore = new ArrayList<ArrayList<String>>();
+		ArrayList<String> splitNonStarStore = new ArrayList<String>();
 		Map<String, Integer> import_values = new HashMap<>();
 		Map<String, Integer> code_values = new HashMap<>();	
 		
 		
 		for (Iterator iterator = importsList.iterator(); iterator.hasNext();) {
 			String string = (String) iterator.next();
-			String[] temp = string.split("\\.");
-			//removed java
-			int count=0;			
-			for (String s : temp)
+			if(string.contains("*"))
 			{
-				if(s.equals("*"))
+				String[] temp = string.split("\\.");
+				//removed java
+				int count=0;
+				for (String s : temp)
 				{
-					ArrayList<String> inner = new ArrayList<String>();
-					inner.add(temp[count-1]);
-					FileInputStream fstream1 = new FileInputStream("importPackages.txt");
-					BufferedReader br1 = new BufferedReader(new InputStreamReader(fstream1));
-					String strLine;
-					
-					while ((strLine = br1.readLine()) != null)   
-					{	
-						String string1 = temp[count-1];
+					if(s.contains("*"))
+					{
+						ArrayList<String> inner = new ArrayList<String>();
+						inner.add(temp[count-1]);
+						FileInputStream fstream1 = new FileInputStream("importPackages.txt");
+						BufferedReader br1 = new BufferedReader(new InputStreamReader(fstream1));
+						String strLine;
 						
-						if(strLine.contains(string1))
-						{
+						while ((strLine = br1.readLine()) != null)   
+						{	
+							String string1 = temp[count-1];
 							
-							String[] temp1 = strLine.split(string1);
-							String[] temp2 = temp1[1].split(";");
-						
-							String[] temp3 = temp2[0].split("\\.");
-							int count1=0;
-							for (String s1 : temp3)
+							if(strLine.contains(string1))
 							{
-								if(count1!=0)
-								{								
-									inner.add(s1);
-								}
-								count1++;
-							}	
+								
+								String[] temp1 = strLine.split(string1);
+								String[] temp2 = temp1[1].split(";");
 							
+								String[] temp3 = temp2[0].split("\\.");
+								int count1=0;
+								for (String s1 : temp3)
+								{
+									if(count1!=0)
+									{								
+										inner.add(s1);
+									}
+									count1++;
+								}	
+								
+							}
 						}
-					}
-					splitStore.add(inner);
-			/*		for(ArrayList<String> inner1 : splitStore) {
-				        for(String s1 : inner1)
-				        {
-				        	System.out.println("hey"+s1);
-				        }
-				    }*/
-				}			
-			count++;
-			}			
+						splitStarStore.add(inner);
+				/*		for(ArrayList<String> inner1 : splitStore) {
+					        for(String s1 : inner1)
+					        {
+					        	System.out.println("hey"+s1);
+					        }
+					    }*/
+					}			
+				count++;
+				}
+			}
+			else
+			{
+				String[] temp = string.split("\\.");
+				int count=0;
+				String temp1=null;
+				for (String s : temp)
+				{
+						temp1 = s;
+				}
+			   splitNonStarStore.add(temp1);
+			}
+			
 		}
 		output=output.split("<class>")[1].split("</class>")[0];
 //		System.out.println(output);
@@ -105,8 +121,9 @@ public class Main {
 	    
 	    int count=0;
 	    int flag;
-	    ArrayList<String> usedStarImports = new ArrayList<String>();
-	    for(ArrayList<String> inner : splitStore) {
+	    ArrayList<String> usedImports = new ArrayList<String>();
+	    for(ArrayList<String> inner : splitStarStore) {
+	    	flag=0;
 	        for(String s : inner) {
 	        	for (Map.Entry<String, Integer> entry1 : code_values.entrySet())
 	    		{
@@ -114,27 +131,70 @@ public class Main {
 	    			{
 	    				for (Iterator iterator = importsList.iterator(); iterator.hasNext();) {
 	    					String string = (String) iterator.next();
-	    				//	System.out.println(string);
 	    					String[] temp = string.split("\\.");
     						for (String s1 : temp)
     						{
-    							if(s1.equals(splitStore.get(count).get(0)))
+    							if(s1.equals(s))
     							{
-    				//				System.out.println(string);
-    								usedStarImports.add(string);
+    								flag=1;
     								break;
     							}
-    						}	    					
+    						}
+    						if(flag==1)
+    							break;
+    							
+	    				}
+	    				for (Iterator iterator = importsList.iterator(); iterator.hasNext();){
+	    					String string = (String) iterator.next();
+	    					if(string.contains(splitStarStore.get(count).get(0)) && string.contains("*"))
+	    						usedImports.add(string);
 	    				}
 	    			}
 	    		}
 	        }
 	        count++;
 	    }
-	    for (Iterator iterator = usedStarImports.iterator(); iterator.hasNext();) 
+	    
+	    for(Iterator iterator = splitNonStarStore.iterator(); iterator.hasNext();)
 	    {
-			String string = (String) iterator.next();
-			System.out.println(string);
+	    	String s=(String) iterator.next();
+	    	for (Map.Entry<String, Integer> entry1 : code_values.entrySet())
+    		{
+    			if(s.equals(entry1.getKey()))
+    			{
+    				for (Iterator iterator1 = importsList.iterator(); iterator1.hasNext();) {
+    					String string = (String) iterator1.next();
+    					String[] temp = string.split("\\.");
+						for (String s1 : temp)
+						{
+							if(s1.equals(s))
+							{
+								usedImports.add(string);
+								break;
+							}
+						}	    					
+    				}
+    			}
+    		}
+	    }
+	    System.out.println("Unused imports are: ");
+	    for (Iterator iterator = importsList.iterator(); iterator.hasNext();) 
+	    { 
+	    	 flag=0;
+	    	 String string1 = (String) iterator.next();
+	    	 for (Iterator iterator1 = usedImports.iterator(); iterator1.hasNext();) 
+	    	 {	    		
+	    		 String string2 = (String) iterator1.next();
+	    		 if(string1.equals(string2))
+	    		 {
+	    			 flag=1;
+	    			 break;
+	    		 }
+	    	 }
+	    	 if(flag==0)
+	    	 {
+	    		 System.out.println(string1);
+	    	 }
 	    }
 	}
 }
