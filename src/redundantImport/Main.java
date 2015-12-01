@@ -19,7 +19,5 @@ public class Main {
 			String string = (String) iterator.next();
 			System.out.println(string);
 		}
-		
-		
 	}
 }
