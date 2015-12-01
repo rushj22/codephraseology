@@ -1,13 +1,11 @@
 package unusedImport;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,12 +14,6 @@ import common.*;
 public class Main {
 	public static void main(String[] args) throws IOException {
 		String filePath = "C:\\Users\\Lenvo\\Desktop\\testcode.java";
-/*		
-		while ((strLine = br1.readLine()) != null)   
-		{	
-			remove_from.put(Integer.parseInt(strLine.split(" ")[1]),Integer.parseInt(strLine.split(" ")[2]));
-			temp.put(Integer.parseInt(strLine.split(" ")[1]),Integer.parseInt(strLine.split(" ")[0]));
-		}*/
 		ExecuteCommand obj = new ExecuteCommand();
 		String command = "srcml " + filePath;
 		String output = obj.executeCommand(command);
@@ -81,7 +73,7 @@ public class Main {
 					        	System.out.println("hey"+s1);
 					        }
 					    }*/
-					}			
+					}
 				count++;
 				}
 			}
