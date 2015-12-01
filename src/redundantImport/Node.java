@@ -7,7 +7,9 @@ public class Node {
 	private String nodeVal;
 	private boolean isEnd;
 	private boolean isStar;
+	private boolean isVisited;
 	private TreeMap<String, Node> children;
+	private Node parent;
 
 	public Node(String val) {
 		this.nodeVal = val;
@@ -55,4 +57,21 @@ public class Node {
 	public void setChildren(TreeMap<String, Node> children) {
 		this.children = children;
 	}
+
+	public Node getParent() {
+		return parent;
+	}
+
+	public void setParent(Node parent) {
+		this.parent = parent;
+	}
+
+	public boolean isVisited() {
+		return isVisited;
+	}
+
+	public void setVisited(boolean isVisited) {
+		this.isVisited = isVisited;
+	}
+	
 }
