@@ -1,4 +1,4 @@
-ackage Q1.TrieNode;
+package Q1.TrieNode;
 
 import java.util.TreeMap;
 
