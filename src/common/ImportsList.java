@@ -17,8 +17,8 @@ public class ImportsList {
 	    while (importMatcher.find()) {
 	    	nameMatcher = namePattern.matcher(importMatcher.group(1));
 	    	importName = "";
-//			System.out.println(importMatcher.group(1));
 	    	while(nameMatcher.find()) {
+		//    	System.out.println("hi "+importMatcher.group(1));
 //	    		System.out.println(nameMatcher.group(1));
 				if(nameMatcher.group(1).split("<name>")[0].trim().equals("")) {
 	    			importName += nameMatcher.group(1).split("<name>")[1].trim();

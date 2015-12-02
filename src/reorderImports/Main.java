@@ -33,10 +33,10 @@ public class Main {
 			}
 			if(flag==0)
 			{
-				if(string.contains("java"))
-					hasJavas.add(string);
-				else if(string.contains("javax"))
+				if(string.contains("javax"))
 					hasJavax.add(string);
+				else if(string.contains("java"))
+					hasJavas.add(string);
 				else
 					hasOthers.add(string);
 			}
@@ -80,18 +80,21 @@ public class Main {
 				System.out.println("import static "+string);
 			}
 		}
+		System.out.println("\n");
 		for (Iterator iterator = hasJavas.iterator(); iterator.hasNext();) {
 			String string = (String) iterator.next();
 			{
 				System.out.println("import "+string);
 			}
 		}
+		System.out.println("\n");		
 		for (Iterator iterator = hasJavax.iterator(); iterator.hasNext();) {
 			String string = (String) iterator.next();
 			{
 				System.out.println("import "+string);
 			}
 		}
+		System.out.println("\n");
 		for (Iterator iterator = hasOthers.iterator(); iterator.hasNext();) {
 			String string = (String) iterator.next();
 			{
