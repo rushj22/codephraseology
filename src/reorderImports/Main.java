@@ -8,7 +8,7 @@ import common.ImportsList;
 
 public class Main {
 	public static void main(String[] args) {
-		String filePath = "C:\\Users\\Lenvo\\Desktop\\testcode.java";
+		String filePath = "C:\\Users\\Soumya\\workspace\\codephraseology\\testcode3.java";
 		ExecuteCommand obj = new ExecuteCommand();
 		String command = "srcml " + filePath;
 		String output = obj.executeCommand(command);

@@ -12,16 +12,11 @@ import java.util.regex.Pattern;
 
 import common.*;
 public class Main {
-	
-	public static void main(String[] args){
-		String filePath = "G:\\Codes\\Java\\MyFirst.java";
+	public static void main(String[] args) throws IOException {
+		String filePath = "C:\\Users\\Soumya\\workspace\\codephraseology\\testcode1.java";
 		ExecuteCommand obj = new ExecuteCommand();
 		String command = "srcml " + filePath;
 		String output = obj.executeCommand(command);
-<<<<<<< Updated upstream
-		
-	    
-=======
 //		System.out.println(output);
 		ImportsList obj1 = new ImportsList();
 		ArrayList<String> importsList = obj1.ImportsList(output);
@@ -307,6 +302,5 @@ public class Main {
 	    		 System.out.println(string1);
 	    	 }
 	    }
->>>>>>> Stashed changes
 	}
 }
